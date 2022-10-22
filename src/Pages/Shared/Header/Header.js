@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 import LeftSideNav from '../LeftSideNav/LeftSideNav';
+import Image from 'react-bootstrap/Image'
+import { FaUser } from 'react-icons/fa';
+import { Button } from 'react-bootstrap';
 const Header = () => {
+  const {user, logOut}= useContext(AuthContext);
+
+   const handleLogOut=()=>{
+    logOut()
+    .then(()=>{})
+    .catch(error=>console.error(error))
+   }
     return (
   <div>
-    <Navbar bg="light" expand="lg">
+    <Navbar className='mb-4' collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Dragon News</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Brand><Link to='/'>Dragon News</Link></Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">All News</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            <Nav.Link href="#features">Features</Nav.Link>
+            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
@@ -26,6 +38,27 @@ const Header = () => {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
+          </Nav>
+          <Nav>
+            <Nav.Link href="#deets">
+            {
+              user?.uid?
+              <>
+                 {user?.displayName}
+                 <Button onClick={handleLogOut} variant="danger">Log Out</Button>
+              </> :
+              <>
+              <Link to='/login'>Login</Link>
+              <Link to='/register'>Register</Link>
+              </>
+            }
+            
+            </Nav.Link>
+            <Nav.Link eventKey={2} href="#memes">
+             {user?.photoURL?
+             <Image style={{height: '30px'}} roundedCircle src={user.photoURL}></Image> : <FaUser></FaUser>
+            }
+            </Nav.Link>
           </Nav>
           <div className='d-lg-none'>
             <LeftSideNav></LeftSideNav>
