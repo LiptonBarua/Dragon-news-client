@@ -5,6 +5,7 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login/Login";
 import Register from "../../Pages/Login/Register/Register";
 import News from "../../Pages/News/News/News";
+import Public from "../../Pages/Others/Public/Public";
 import TremsAndCodition from "../../Pages/Others/TremsAndCodition";
 import PrivateRouter from "../PrivateRouter/PrivateRouter";
 
@@ -34,6 +35,9 @@ export const routes = createBrowserRouter([
           },
           {
             path: '/terms', element: <TremsAndCodition></TremsAndCodition>
+          },
+          {
+            path: '/public', element: <PrivateRouter><Public></Public></PrivateRouter>
           } 
         ]
     }
